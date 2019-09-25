@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="530efaec-2657-4519-a8de-c5ea909a0545" name="Default Changelist" comment="" />
+    <list default="true" id="8c32b6af-2f35-44ec-a074-43c83753a8b3" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectId" id="1RF0abJ22U2IYWkNA0SX44WIbBl" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1RI0VCZyZh1UtwQvGV2Yxn36ISh" />
   <component name="PropertiesComponent">
+    <property name="ignore.virus.scanning.warn.message" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -29,11 +41,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="530efaec-2657-4519-a8de-c5ea909a0545" name="Default Changelist" comment="" />
-      <created>1569247600827</created>
+      <changelist id="8c32b6af-2f35-44ec-a074-43c83753a8b3" name="Default Changelist" comment="" />
+      <created>1569339324545</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1569247600827</updated>
+      <updated>1569339324545</updated>
     </task>
     <servers />
   </component>
