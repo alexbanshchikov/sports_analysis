@@ -216,7 +216,7 @@ class GameGoals(models.Model):
     author = models.ForeignKey('Player', models.DO_NOTHING, db_column='author', related_name='author_foreign_key')
     first_assist = models.ForeignKey('Player', models.DO_NOTHING, db_column='first_assist', blank=True, null=True, related_name='first_assist_foreign_key')
     second_assist = models.ForeignKey('Player', models.DO_NOTHING, db_column='second_assist', blank=True, null=True, related_name='second_assist_foreign_key')
-    period_number = models.IntegerField()
+    time_period = models.ForeignKey('TimePeriod', models.DO_NOTHING, db_column='time_period_id', related_name='time_period_foreign_key')
     time = models.TimeField()
     current_score = models.TextField()
     current_team_strength = models.TextField()
