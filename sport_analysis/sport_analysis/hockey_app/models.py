@@ -446,7 +446,6 @@ class Team(models.Model):
     home_wins_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
     guest_wins_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
     games_with_goalkeeper_pulled_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    team_manner = models.ForeignKey(MannerOfPlay, models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -565,3 +564,13 @@ class TimePeriod(models.Model):
     class Meta:
         managed = False
         db_table = 'time_period'
+
+
+class MannerOfPlayInTeam(models.Model):
+    team = models.ForeignKey(Team, models.DO_NOTHING, primary_key=True)
+    manner_of_play = models.ForeignKey(MannerOfPlay, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'manner_of_play_in_team'
+        unique_together = (('team', 'manner_of_play'),)
