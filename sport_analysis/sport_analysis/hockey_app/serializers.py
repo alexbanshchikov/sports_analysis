@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import PlayerStatus, Amplua, Conference, Division, TimePeriod, Team, GameStats, Game, GameGoals, \
-    GamePenalties, MannerOfPlay, AfterGameBullits, Coach, CoachInTeam, Derbi, GoalShoots, GoalkeeperStats, OffenceStats, \
+    GamePenalties, MannerOfPlay, TeamAfterGameBullits, Coach, CoachInTeam, Derbi, TeamGoalShoots, GoalkeeperStats, OffenceStats, \
     PersonalEnemy, Player, PlayerInTeam, Referee, RefereeInGame, TeamInConference, TeamInDivision, TeamPenalties, \
     TeamStatsByPeriod, TeamStatsByStrength, MannerOfPlayInTeam
 
@@ -17,9 +17,9 @@ class AmpluaSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class AfterGameBullitsSerializer(serializers.ModelSerializer):
+class TeamAfterGameBullitsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AfterGameBullits
+        model = TeamAfterGameBullits
         fields = ('id', 'bullits_games_count', 'wins_count', 'lose_count', 'bullits_shoot_count',
                   'bullits_goals_count', 'bullits_goals_count_percent', 'against_bullits_shoot_count',
                   'against_bullits_goals_count', 'against_bullits_goals_count_percent', 'team')
@@ -107,9 +107,9 @@ class MannerOfPlaySerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class GoalShootsSerializer(serializers.ModelSerializer):
+class TeamGoalShootsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = GoalShoots
+        model = TeamGoalShoots
         fields = ('id', 'home_goal_shoots_count', 'home_implemented_goal_shoots_count', 'home_implemented_goal_shoots_percent',
                   'guest_goal_shoots_count', 'guest_implemented_goal_shoots_percent', 'guest_implemented_goal_shoots_count',
                   'total_goal_shoots_count', 'total_implemented_goal_shoots_count', 'total_implemented_goal_shoots_percent',

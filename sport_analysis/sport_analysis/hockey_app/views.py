@@ -4,12 +4,12 @@ from rest_framework import viewsets
 
 from .serializers import PlayerStatusSerializer, AmpluaSerializer, ConferenceSerializer, DivisionSerializer, TimePeriodSerializer, \
     TeamSerializer, GameStatsSerializer, GameSerializer, GameGoalsSerializer, GamePenaltiesSerializer, \
-    MannerOfPlaySerializer, AfterGameBullitsSerializer, CoachSerializer, CoachInTeamSerializer, DerbiSerializer, GoalShootsSerializer, \
+    MannerOfPlaySerializer, TeamAfterGameBullitsSerializer, CoachSerializer, CoachInTeamSerializer, DerbiSerializer, TeamGoalShootsSerializer, \
     GoalkeeperStatsSerializer, OffenceStatsSerializer, PersonalEnemySerializer, PlayerSerializer, PlayerInTeamSerializer, \
     RefereeSerializer, RefereeInGameSerializer, TeamInConferenceSerializer, TeamInDivisionSerializer, TeamPenaltiesSerializer, \
     TeamStatsByPeriodSerializer, TeamStatsByStrengthSerializer, MannerOfPlayInTeamSerializer
 from .models import PlayerStatus, Amplua, Conference, Division, TimePeriod, Team, GameStats, Game, GameGoals, GamePenalties, \
-    MannerOfPlay, AfterGameBullits, Coach, CoachInTeam, Derbi, GoalShoots, GoalkeeperStats, OffenceStats, PersonalEnemy, \
+    MannerOfPlay, TeamAfterGameBullits, Coach, CoachInTeam, Derbi, TeamGoalShoots, GoalkeeperStats, OffenceStats, PersonalEnemy, \
     Player, PlayerInTeam, Referee, RefereeInGame, TeamInDivision, TeamInConference, TeamPenalties, TeamStatsByPeriod, \
     TeamStatsByStrength, MannerOfPlayInTeam
 
@@ -70,8 +70,8 @@ class MannerOfPlayViewSet(viewsets.ModelViewSet):
 
 
 class AfterGameBullitsViewSet(viewsets.ModelViewSet):
-    serializer_class = AfterGameBullitsSerializer
-    queryset = AfterGameBullits.objects.all()
+    serializer_class = TeamAfterGameBullitsSerializer
+    queryset = TeamAfterGameBullits.objects.all()
 
 
 class CoachViewSet(viewsets.ModelViewSet):
@@ -90,8 +90,8 @@ class DerbiViewSet(viewsets.ModelViewSet):
 
 
 class GoalShootsViewSet(viewsets.ModelViewSet):
-    serializer_class = GoalShootsSerializer
-    queryset = GoalShoots.objects.all()
+    serializer_class = TeamGoalShootsSerializer
+    queryset = TeamGoalShoots.objects.all()
 
 
 class GoalkeeperStatsViewSet(viewsets.ModelViewSet):

@@ -1,10 +1,10 @@
 from django.contrib import admin
 from .models import PlayerStatus, Amplua, Conference, Division, TimePeriod, Team, GameStats, GameGoals, GamePenalties, \
-    MannerOfPlay, AfterGameBullits, Coach, CoachInTeam, Derbi, GoalShoots, GoalkeeperStats, OffenceStats, PersonalEnemy, \
+    MannerOfPlay, TeamAfterGameBullits, Coach, CoachInTeam, Derbi, TeamGoalShoots, GoalkeeperStats, OffenceStats, PersonalEnemy, \
     Player, PlayerInTeam, Referee, RefereeInGame, TeamInConference, TeamInDivision, TeamPenalties, TeamStatsByPeriod, \
     TeamStatsByStrength, MannerOfPlayInTeam
 
-admin.site.register(AfterGameBullits)
+admin.site.register(TeamAfterGameBullits)
 admin.site.register(Amplua)
 admin.site.register(PlayerStatus)
 admin.site.register(Conference)
@@ -18,7 +18,7 @@ admin.site.register(MannerOfPlay)
 admin.site.register(Coach)
 admin.site.register(CoachInTeam)
 admin.site.register(Derbi)
-admin.site.register(GoalShoots)
+admin.site.register(TeamGoalShoots)
 admin.site.register(GoalkeeperStats)
 admin.site.register(OffenceStats)
 admin.site.register(PersonalEnemy)
