@@ -8,24 +8,6 @@
 from django.db import models
 
 
-class AfterGameBullits(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    bullits_games_count = models.IntegerField()
-    wins_count = models.IntegerField()
-    lose_count = models.IntegerField()
-    bullits_shoot_count = models.IntegerField()
-    bullits_goals_count = models.IntegerField()
-    bullits_goals_count_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    against_bullits_shoot_count = models.IntegerField()
-    against_bullits_goals_count = models.IntegerField()
-    against_bullits_goals_count_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    team = models.ForeignKey('Team', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'after_game_bullits'
-
-
 class Amplua(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.TextField()
@@ -33,72 +15,6 @@ class Amplua(models.Model):
     class Meta:
         managed = False
         db_table = 'amplua'
-
-
-class AuthGroup(models.Model):
-    name = models.CharField(unique=True, max_length=150)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group'
-
-
-class AuthGroupPermissions(models.Model):
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group_permissions'
-        unique_together = (('group', 'permission'),)
-
-
-class AuthPermission(models.Model):
-    name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
-    codename = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_permission'
-        unique_together = (('content_type', 'codename'),)
-
-
-class AuthUser(models.Model):
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.BooleanField()
-    username = models.CharField(unique=True, max_length=150)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=150)
-    email = models.CharField(max_length=254)
-    is_staff = models.BooleanField()
-    is_active = models.BooleanField()
-    date_joined = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user'
-
-
-class AuthUserGroups(models.Model):
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
-
-
-class AuthUserUserPermissions(models.Model):
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
 
 
 class Coach(models.Model):
@@ -155,56 +71,13 @@ class Division(models.Model):
         db_table = 'division'
 
 
-class DjangoAdminLog(models.Model):
-    action_time = models.DateTimeField()
-    object_id = models.TextField(blank=True, null=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.SmallIntegerField()
-    change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'django_admin_log'
-
-
-class DjangoContentType(models.Model):
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'django_content_type'
-        unique_together = (('app_label', 'model'),)
-
-
-class DjangoMigrations(models.Model):
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_migrations'
-
-
-class DjangoSession(models.Model):
-    session_key = models.CharField(primary_key=True, max_length=40)
-    session_data = models.TextField()
-    expire_date = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_session'
-
-
 class Game(models.Model):
     id = models.BigAutoField(primary_key=True)
     date = models.DateField()
     link = models.TextField()
     home_team = models.ForeignKey('Team', models.DO_NOTHING, related_name='home_team_foreign_key')
     guest_team = models.ForeignKey('Team', models.DO_NOTHING, related_name='guest_team_foreign_key')
+    season = models.ForeignKey('Season', models.DO_NOTHING, related_name='season_foreign_key')
 
     class Meta:
         managed = False
@@ -217,10 +90,10 @@ class GameGoals(models.Model):
     first_assist = models.ForeignKey('Player', models.DO_NOTHING, db_column='first_assist', blank=True, null=True, related_name='first_assist_foreign_key')
     second_assist = models.ForeignKey('Player', models.DO_NOTHING, db_column='second_assist', blank=True, null=True, related_name='second_assist_foreign_key')
     time_period = models.ForeignKey('TimePeriod', models.DO_NOTHING, db_column='time_period_id', related_name='time_period_foreign_key')
-    time = models.TimeField()
     current_score = models.TextField()
     current_team_strength = models.TextField()
     game = models.ForeignKey(Game, models.DO_NOTHING)
+    time = models.TextField()
 
     class Meta:
         managed = False
@@ -229,11 +102,11 @@ class GameGoals(models.Model):
 
 class GamePenalties(models.Model):
     id = models.BigAutoField(primary_key=True)
-    time = models.TimeField()
     reason = models.TextField()
     duration = models.IntegerField()
     player = models.ForeignKey('Player', models.DO_NOTHING)
     game = models.ForeignKey(Game, models.DO_NOTHING)
+    time = models.TextField()
 
     class Meta:
         managed = False
@@ -247,7 +120,6 @@ class GameStats(models.Model):
     implemented_goal_shoot_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
     blocked_shots_count = models.IntegerField()
     body_contact_count = models.IntegerField()
-    attack_time = models.TimeField()
     powerplay_goals_count = models.IntegerField()
     shorthanded_goals_count = models.IntegerField()
     powerplay_count = models.IntegerField()
@@ -258,28 +130,11 @@ class GameStats(models.Model):
     team = models.ForeignKey('Team', models.DO_NOTHING)
     game = models.ForeignKey(Game, models.DO_NOTHING)
     time_period = models.ForeignKey('TimePeriod', models.DO_NOTHING)
+    attack_time = models.TextField()
 
     class Meta:
         managed = False
         db_table = 'game_stats'
-
-
-class GoalShoots(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    home_goal_shoots_count = models.IntegerField()
-    home_implemented_goal_shoots_count = models.IntegerField()
-    home_implemented_goal_shoots_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    guest_goal_shoots_count = models.IntegerField()
-    guest_implemented_goal_shoots_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    guest_implemented_goal_shoots_count = models.IntegerField()
-    total_goal_shoots_count = models.IntegerField()
-    total_implemented_goal_shoots_count = models.IntegerField()
-    total_implemented_goal_shoots_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    team = models.ForeignKey('Team', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'goal_shoots'
 
 
 class GoalkeeperStats(models.Model):
@@ -297,13 +152,23 @@ class GoalkeeperStats(models.Model):
     assists_count = models.IntegerField()
     shutouts_count = models.IntegerField()
     penalty_time = models.IntegerField()
-    playing_time = models.TimeField()
     player = models.ForeignKey('Player', models.DO_NOTHING)
     game = models.ForeignKey(Game, models.DO_NOTHING, blank=True, null=True)
+    season = models.ForeignKey('Season', models.DO_NOTHING)
+    playing_time = models.TextField()
 
     class Meta:
         managed = False
         db_table = 'goalkeeper_stats'
+
+
+class League(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.TextField()
+
+    class Meta:
+        managed = False
+        db_table = 'league'
 
 
 class MannerOfPlay(models.Model):
@@ -313,6 +178,16 @@ class MannerOfPlay(models.Model):
     class Meta:
         managed = False
         db_table = 'manner_of_play'
+
+
+class MannerOfPlayInTeam(models.Model):
+    team = models.ForeignKey('Team', models.DO_NOTHING, primary_key=True)
+    manner_of_play = models.ForeignKey(MannerOfPlay, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'manner_of_play_in_team'
+        unique_together = (('team', 'manner_of_play'), ('team', 'manner_of_play'),)
 
 
 class OffenceStats(models.Model):
@@ -338,13 +213,14 @@ class OffenceStats(models.Model):
     faceoff_count = models.IntegerField()
     win_faceoff_count = models.IntegerField()
     win_faceoff_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    average_playing_time = models.TimeField()
     average_change_count_per_game = models.DecimalField(max_digits=65535, decimal_places=65535)
     body_contact_count = models.IntegerField()
     blocked_shoot_count = models.IntegerField()
     foul_against_count = models.IntegerField()
     player = models.ForeignKey('Player', models.DO_NOTHING)
     game = models.ForeignKey(Game, models.DO_NOTHING, blank=True, null=True)
+    season = models.ForeignKey('Season', models.DO_NOTHING)
+    average_playing_time = models.TextField()
 
     class Meta:
         managed = False
@@ -368,6 +244,8 @@ class Player(models.Model):
     date_of_birth = models.DateField()
     amplua = models.ForeignKey(Amplua, models.DO_NOTHING)
     status = models.ForeignKey('PlayerStatus', models.DO_NOTHING)
+    nationality = models.TextField()
+    date_of_contract_expiration = models.DateField()
 
     class Meta:
         managed = False
@@ -389,9 +267,6 @@ class PlayerInTeam(models.Model):
 class PlayerStatus(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.TextField()
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         managed = False
@@ -418,38 +293,87 @@ class RefereeInGame(models.Model):
         unique_together = (('referee', 'game'), ('referee', 'game'),)
 
 
+class Season(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.TextField()
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'season'
+
+
 class Team(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.TextField()
-    last_game_date = models.DateTimeField()
-    games_count = models.IntegerField()
-    win_count = models.IntegerField()
-    overtime_wins_count = models.IntegerField()
-    lose_count = models.IntegerField()
+    last_game_date = models.DateField(blank=True, null=True)
+    logo = models.TextField(blank=True, null=True)
+    league = models.ForeignKey(League, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'team'
+
+
+class TeamAdditionalStats(models.Model):
+    id = models.BigAutoField(primary_key=True)
     overtime_wins_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    shutout_games_count = models.IntegerField()
-    goalless_games_count = models.IntegerField()
-    bullit_wins_count = models.IntegerField()
     bullit_wins_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    score_count = models.IntegerField()
-    goals_count = models.IntegerField()
-    miss_goals_count = models.IntegerField()
-    penalty_time = models.IntegerField()
-    penalty_time_against = models.IntegerField()
     empty_net_goals_count = models.IntegerField()
     penalty_bullits_count = models.IntegerField()
-    average_goals_count = models.IntegerField()
-    attack_time = models.TimeField()
+    average_goals_count = models.DecimalField(max_digits=65535, decimal_places=65535)
+    attack_time = models.TextField()
     period_wins_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
     shoot_wins_by_period_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
     shoot_against_count = models.IntegerField()
     home_wins_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
     guest_wins_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
     games_with_goalkeeper_pulled_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
+    team = models.ForeignKey(Team, models.DO_NOTHING)
+    season = models.ForeignKey(Season, models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = 'team'
+        db_table = 'team_additional_stats'
+
+
+class TeamAfterGameBullits(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    bullits_games_count = models.IntegerField()
+    wins_count = models.IntegerField()
+    lose_count = models.IntegerField()
+    bullits_shoot_count = models.IntegerField()
+    bullits_goals_count = models.IntegerField()
+    bullits_goals_count_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
+    against_bullits_shoot_count = models.IntegerField()
+    against_bullits_goals_count = models.IntegerField()
+    against_bullits_goals_count_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
+    team = models.ForeignKey(Team, models.DO_NOTHING)
+    season = models.ForeignKey(Season, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'team_after_game_bullits'
+
+
+class TeamGoalShoots(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    home_goal_shoots_count = models.IntegerField()
+    home_implemented_goal_shoots_count = models.IntegerField()
+    home_implemented_goal_shoots_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
+    guest_goal_shoots_count = models.IntegerField()
+    guest_implemented_goal_shoots_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
+    guest_implemented_goal_shoots_count = models.IntegerField()
+    total_goal_shoots_count = models.IntegerField()
+    total_implemented_goal_shoots_count = models.IntegerField()
+    total_implemented_goal_shoots_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
+    team = models.ForeignKey(Team, models.DO_NOTHING)
+    season = models.ForeignKey(Season, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'team_goal_shoots'
 
 
 class TeamInConference(models.Model):
@@ -472,6 +396,31 @@ class TeamInDivision(models.Model):
         unique_together = (('team', 'division'),)
 
 
+class TeamMainStats(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    games_count = models.IntegerField()
+    win_count = models.IntegerField()
+    overtime_wins_count = models.IntegerField()
+    lose_count = models.IntegerField()
+    shutout_games_count = models.IntegerField()
+    goalless_games_count = models.IntegerField()
+    bullit_wins_count = models.IntegerField()
+    score_count = models.IntegerField()
+    goals_count = models.IntegerField()
+    miss_goals_count = models.IntegerField()
+    penalty_time = models.IntegerField()
+    penalty_time_against = models.IntegerField()
+    team = models.ForeignKey(Team, models.DO_NOTHING)
+    season = models.ForeignKey(Season, models.DO_NOTHING)
+    type_of_game = models.ForeignKey('TypeOfGame', models.DO_NOTHING)
+    bullit_lose_count = models.IntegerField()
+    overtime_lose_count = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'team_main_stats'
+
+
 class TeamPenalties(models.Model):
     id = models.BigAutoField(primary_key=True)
     number_2_minutes_penalty_count = models.IntegerField(db_column='2_minutes_penalty_count')  # Field renamed because it wasn't a valid Python identifier.
@@ -487,10 +436,59 @@ class TeamPenalties(models.Model):
     against_total_penalty_time = models.IntegerField()
     against_average_penalty_time_per_game = models.DecimalField(max_digits=65535, decimal_places=65535)
     team = models.ForeignKey(Team, models.DO_NOTHING)
+    season = models.ForeignKey(Season, models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'team_penalties'
+
+
+class TeamStatsByImplementedGoals(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    number_5x5_goals_count = models.IntegerField(db_column='5x5_goals_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_5x4_goals_count = models.IntegerField(db_column='5x4_goals_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_5x3_goals_count = models.IntegerField(db_column='5x3_goals_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_4x4_goals_count = models.IntegerField(db_column='4x4_goals_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_4x3_goals_count = models.IntegerField(db_column='4x3_goals_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_3x3_goals_count = models.IntegerField(db_column='3x3_goals_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_3x4_goals_count = models.IntegerField(db_column='3x4_goals_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_3x5_goals_count = models.IntegerField(db_column='3x5_goals_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_4x5_goals_count = models.IntegerField(db_column='4x5_goals_count')  # Field renamed because it wasn't a valid Python identifier.
+    empty_net_goals_count = models.IntegerField()
+    bullit_goals_count = models.IntegerField()
+    total_goals_count = models.IntegerField()
+    average_goals_count_per_game = models.DecimalField(max_digits=65535, decimal_places=65535)
+    game = models.ForeignKey(Game, models.DO_NOTHING, blank=True, null=True)
+    team = models.ForeignKey(Team, models.DO_NOTHING)
+    season = models.ForeignKey(Season, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'team_stats_by_implemented_goals'
+
+
+class TeamStatsByMissedGoals(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    number_5x5_miss_count = models.IntegerField(db_column='5x5_miss_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_5x4_miss_count = models.IntegerField(db_column='5x4_miss_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_5x3_miss_count = models.IntegerField(db_column='5x3_miss_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_4x4_miss_count = models.IntegerField(db_column='4x4_miss_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_4x3_miss_count = models.IntegerField(db_column='4x3_miss_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_3x3_miss_count = models.IntegerField(db_column='3x3_miss_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_3x4_miss_count = models.IntegerField(db_column='3x4_miss_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_3x5_miss_count = models.IntegerField(db_column='3x5_miss_count')  # Field renamed because it wasn't a valid Python identifier.
+    number_4x5_miss_count = models.IntegerField(db_column='4x5_miss_count')  # Field renamed because it wasn't a valid Python identifier.
+    empty_net_miss_count = models.IntegerField()
+    bullit_miss_count = models.IntegerField()
+    total_miss_count = models.IntegerField()
+    average_miss_count_per_game = models.DecimalField(max_digits=65535, decimal_places=65535)
+    game = models.ForeignKey(Game, models.DO_NOTHING, blank=True, null=True)
+    team = models.ForeignKey(Team, models.DO_NOTHING)
+    season = models.ForeignKey(Season, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'team_stats_by_missed_goals'
 
 
 class TeamStatsByPeriod(models.Model):
@@ -507,6 +505,7 @@ class TeamStatsByPeriod(models.Model):
     against_penalty_time = models.IntegerField()
     time_period = models.ForeignKey('TimePeriod', models.DO_NOTHING)
     team = models.ForeignKey(Team, models.DO_NOTHING)
+    season = models.ForeignKey(Season, models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -523,34 +522,8 @@ class TeamStatsByStrength(models.Model):
     shorthanded_goals_count = models.IntegerField()
     implemented_shorthanded_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
     missed_goals_shorthanded_count = models.IntegerField()
-    number_5x5_goals_count = models.IntegerField(db_column='5x5_goals_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_5x4_goals_count = models.IntegerField(db_column='5x4_goals_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_5x3_goals_count = models.IntegerField(db_column='5x3_goals_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_4x4_goals_count = models.IntegerField(db_column='4x4_goals_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_4x3_goals_count = models.IntegerField(db_column='4x3_goals_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_3x3_goals_count = models.IntegerField(db_column='3x3_goals_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_3x4_goals_count = models.IntegerField(db_column='3x4_goals_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_3x5_goals_count = models.IntegerField(db_column='3x5_goals_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_4x5_goals_count = models.IntegerField(db_column='4x5_goals_count')  # Field renamed because it wasn't a valid Python identifier.
-    empty_net_goals_count = models.IntegerField()
-    bullit_goals_count = models.IntegerField()
-    total_goals_count = models.IntegerField()
-    average_goals_count_per_game = models.DecimalField(max_digits=65535, decimal_places=65535)
-    number_5x5_miss_count = models.IntegerField(db_column='5x5_miss_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_5x4_miss_count = models.IntegerField(db_column='5x4_miss_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_5x3_miss_count = models.IntegerField(db_column='5x3_miss_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_4x4_miss_count = models.IntegerField(db_column='4x4_miss_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_4x3_miss_count = models.IntegerField(db_column='4x3_miss_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_3x3_miss_count = models.IntegerField(db_column='3x3_miss_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_3x4_miss_count = models.IntegerField(db_column='3x4_miss_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_3x5_miss_count = models.IntegerField(db_column='3x5_miss_count')  # Field renamed because it wasn't a valid Python identifier.
-    number_4x5_miss_count = models.IntegerField(db_column='4x5_miss_count')  # Field renamed because it wasn't a valid Python identifier.
-    empty_net_miss_count = models.IntegerField()
-    bullit_miss_count = models.IntegerField()
-    total_miss_count = models.IntegerField()
-    average_miss_count_per_game = models.DecimalField(max_digits=65535, decimal_places=65535)
-    game = models.ForeignKey(Game, models.DO_NOTHING, blank=True, null=True)
     team = models.ForeignKey(Team, models.DO_NOTHING)
+    season = models.ForeignKey(Season, models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -566,11 +539,10 @@ class TimePeriod(models.Model):
         db_table = 'time_period'
 
 
-class MannerOfPlayInTeam(models.Model):
-    team = models.ForeignKey(Team, models.DO_NOTHING, primary_key=True)
-    manner_of_play = models.ForeignKey(MannerOfPlay, models.DO_NOTHING)
+class TypeOfGame(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.TextField()
 
     class Meta:
         managed = False
-        db_table = 'manner_of_play_in_team'
-        unique_together = (('team', 'manner_of_play'),)
+        db_table = 'type_of_game'
