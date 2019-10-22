@@ -113,28 +113,70 @@ class GamePenalties(models.Model):
         db_table = 'game_penalties'
 
 
-class GameStats(models.Model):
+class GameStatsByBodyContact(models.Model):
     id = models.BigAutoField(primary_key=True)
-    goals_count = models.IntegerField()
-    shoots_count = models.IntegerField()
-    implemented_goal_shoot_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
-    blocked_shots_count = models.IntegerField()
-    body_contact_count = models.IntegerField()
-    powerplay_goals_count = models.IntegerField()
-    shorthanded_goals_count = models.IntegerField()
-    powerplay_count = models.IntegerField()
-    faceoff_wins_count = models.IntegerField()
-    penalty_time = models.TimeField()
-    distance = models.DecimalField(max_digits=65535, decimal_places=65535)
-    puck_owned_time = models.TimeField()
+    blocked_shots_count = models.IntegerField
+    body_contact_count = models.IntegerField
+    attack_time = models.TextField
     team = models.ForeignKey('Team', models.DO_NOTHING)
     game = models.ForeignKey(Game, models.DO_NOTHING)
     time_period = models.ForeignKey('TimePeriod', models.DO_NOTHING)
-    attack_time = models.TextField()
 
     class Meta:
         managed = False
-        db_table = 'game_stats'
+        db_table = 'game_stats_by_body_contact'
+
+
+class GameStatsByDifferentStrength(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    powerplay_count = models.IntegerField
+    powerplay_goals_count = models.IntegerField
+    implemented_powerplay_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
+    powerplay_missed_goals_count = models.IntegerField
+    shorthand_count = models.IntegerField
+    shorthanded_missed_goals_count = models.IntegerField
+    implemented_shorthand_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
+    shorthanded_goals_count = models.IntegerField
+    team = models.ForeignKey('Team', models.DO_NOTHING)
+    game = models.ForeignKey(Game, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'game_stats_by_different_strength'
+
+
+class GameStatsByGoalShoots(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    goals_count = models.IntegerField
+    shoots_count = models.IntegerField
+    implemented_goal_shoot_percent = models.DecimalField(max_digits=65535, decimal_places=65535)
+    team = models.ForeignKey('Team', models.DO_NOTHING)
+    game = models.ForeignKey(Game, models.DO_NOTHING)
+    time_period = models.ForeignKey('TimePeriod', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'game_stats_by_goal_shoots'
+
+
+class GameStatsSummary(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    goals_count = models.IntegerField
+    shoots_count = models.IntegerField
+    powerplay_goals_count = models.IntegerField
+    shorthanded_goals_count = models.IntegerField
+    powerplay_count = models.IntegerField
+    faceoff_wins_count = models.IntegerField
+    penalty_time = models.IntegerField
+    distance = models.TextField
+    puck_owned_time = models.TextField
+    team = models.ForeignKey('Team', models.DO_NOTHING)
+    game = models.ForeignKey(Game, models.DO_NOTHING)
+    time_period = models.ForeignKey('TimePeriod', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'game_stats_summary'
 
 
 class GoalkeeperStats(models.Model):

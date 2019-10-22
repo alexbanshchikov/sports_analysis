@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Amplua, Coach, CoachInTeam, Conference, Derbi, Division, Game, GameGoals, GamePenalties, GameStats,\
+from .models import Amplua, Coach, CoachInTeam, Conference, Derbi, Division, Game, GameGoals, GamePenalties, \
+    GameStatsByBodyContact, GameStatsByDifferentStrength, GameStatsByGoalShoots, GameStatsSummary, \
     GoalkeeperStats, League, MannerOfPlay, MannerOfPlayInTeam, OffenceStats, PersonalEnemy, Player, PlayerInTeam, \
     PlayerStatus, Referee, RefereeInGame, Season, Team, TeamAdditionalStats, TeamAfterGameBullits, TeamGoalShoots, \
     TeamInConference, TeamInDivision, TeamMainStats, TeamPenalties, TeamStatsByImplementedGoals, \
@@ -61,13 +62,33 @@ class GamePenaltiesSerializer(serializers.ModelSerializer):
         fields = ('id', 'reason', 'duration', 'player', 'game', 'time')
 
 
-class GameStatsSerializer(serializers.ModelSerializer):
+class GameStatsByBodyContactSerializer(serializers.ModelSerializer):
     class Meta:
-        model = GameStats
-        fields = ('id', 'goals_count', 'shoots_count', 'implemented_goal_shoot_percent', 'blocked_shots_count',
-                  'body_contact_count', 'powerplay_goals_count', 'shorthanded_goals_count',
-                  'powerplay_count', 'faceoff_wins_count', 'penalty_time', 'distance', 'puck_owned_time',
-                  'team', 'game', 'time_period', 'attack_time')
+        model = GameStatsByBodyContact
+        fields = ('id', 'blocked_shots_count', 'body_contact_count', 'attack_time', 'team', 'game', 'time_period')
+
+
+class GameStatsByDifferentStrengthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GameStatsByDifferentStrength
+        fields = ('id', 'powerplay_count', 'powerplay_goals_count', 'implemented_powerplay_percent',
+                  'powerplay_missed_goals_count', 'shorthand_count', 'shorthanded_missed_goals_count',
+                  'implemented_shorthand_percent', 'shorthanded_goals_count', 'team', 'game')
+
+
+class GameStatsByGoalShootsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GameStatsByGoalShoots
+        fields = ('id', 'goals_count', 'shoots_count', 'implemented_goal_shoot_percent',
+                  'team', 'game', 'time_period')
+
+
+class GameStatsSummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GameStatsSummary
+        fields = ('id', 'goals_count', 'shoots_count', 'powerplay_goals_count',
+                  'shorthanded_goals_count', 'powerplay_count', 'faceoff_wins_count',
+                  'penalty_time', 'distance', 'puck_owned_time', 'team', 'game', 'time_period')
 
 
 class GoalkeeperStatsSerializer(serializers.ModelSerializer):

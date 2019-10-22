@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Amplua, Coach, CoachInTeam, Conference, Derbi, Division, Game, GameGoals, GamePenalties, \
-    GameStats, GoalkeeperStats, League, MannerOfPlay, MannerOfPlayInTeam, OffenceStats, PersonalEnemy, Player, \
+    GameStatsByBodyContact, GameStatsByDifferentStrength, GameStatsByGoalShoots, GameStatsSummary, GoalkeeperStats, \
+    League, MannerOfPlay, MannerOfPlayInTeam, OffenceStats, PersonalEnemy, Player, \
     PlayerInTeam, PlayerStatus, Referee, RefereeInGame, Season, Team, TeamAdditionalStats, TeamAfterGameBullits, \
     TeamGoalShoots, TeamInConference, TeamInDivision, TeamMainStats, TeamPenalties, TeamStatsByImplementedGoals, \
     TeamStatsByMissedGoals, TeamStatsByPeriod, TeamStatsByStrength, TimePeriod, TypeOfGame
@@ -19,7 +20,10 @@ admin.site.register(Division)
 admin.site.register(Game)
 admin.site.register(GameGoals)
 admin.site.register(GamePenalties)
-admin.site.register(GameStats)
+admin.site.register(GameStatsByBodyContact)
+admin.site.register(GameStatsByDifferentStrength)
+admin.site.register(GameStatsByGoalShoots)
+admin.site.register(GameStatsSummary)
 
 admin.site.register(GoalkeeperStats)
 

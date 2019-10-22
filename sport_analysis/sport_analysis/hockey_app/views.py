@@ -4,7 +4,8 @@ from rest_framework import viewsets
 
 from .serializers import AmpluaSerializer, CoachSerializer, CoachInTeamSerializer, ConferenceSerializer, \
     DerbiSerializer, DivisionSerializer, GameSerializer, GameGoalsSerializer, GamePenaltiesSerializer, \
-    GameStatsSerializer, GoalkeeperStatsSerializer, LeagueSerializer, MannerOfPlaySerializer, \
+    GameStatsByBodyContactSerializer, GameStatsByDifferentStrengthSerializer, GameStatsByGoalShootsSerializer, \
+    GameStatsSummarySerializer, GoalkeeperStatsSerializer, LeagueSerializer, MannerOfPlaySerializer, \
     MannerOfPlayInTeamSerializer, OffenceStatsSerializer, PersonalEnemySerializer, PlayerSerializer, \
     PlayerInTeamSerializer, PlayerStatusSerializer, RefereeSerializer, RefereeInGameSerializer, \
     SeasonSerializer, TeamSerializer, TeamAdditionalStatsSerializer, TeamAfterGameBullitsSerializer, \
@@ -13,7 +14,8 @@ from .serializers import AmpluaSerializer, CoachSerializer, CoachInTeamSerialize
     TeamStatsByPeriodSerializer, TeamStatsByStrengthSerializer, TimePeriodSerializer, TypeOfGameSerializer
 
 from .models import Amplua, Coach, CoachInTeam, Conference, Derbi, Division, Game, GameGoals, GamePenalties, \
-    GameStats, GoalkeeperStats, League, MannerOfPlay, MannerOfPlayInTeam, OffenceStats, PersonalEnemy, Player, \
+    GameStatsByBodyContact, GameStatsByDifferentStrength, GameStatsByGoalShoots, GameStatsSummary, GoalkeeperStats, \
+    League, MannerOfPlay, MannerOfPlayInTeam, OffenceStats, PersonalEnemy, Player, \
     PlayerInTeam, PlayerStatus, Referee, RefereeInGame, Season, Team, TeamAdditionalStats, TeamAfterGameBullits, \
     TeamGoalShoots, TeamInConference, TeamInDivision, TeamMainStats, TeamPenalties, TeamStatsByImplementedGoals, \
     TeamStatsByMissedGoals, TeamStatsByPeriod, TeamStatsByStrength, TimePeriod, TypeOfGame
@@ -64,9 +66,24 @@ class GamePenaltiesViewSet(viewsets.ModelViewSet):
     queryset = GamePenalties.objects.all()
 
 
-class GameStatsViewSet(viewsets.ModelViewSet):
-    serializer_class = GameStatsSerializer
-    queryset = GameStats.objects.all()
+class GameStatsByBodyContactViewSet(viewsets.ModelViewSet):
+    serializer_class = GameStatsByBodyContactSerializer
+    queryset = GameStatsByBodyContact.objects.all()
+
+
+class GameStatsByDifferentStrengthViewSet(viewsets.ModelViewSet):
+    serializer_class = GameStatsByDifferentStrengthSerializer
+    queryset = GameStatsByDifferentStrength.objects.all()
+
+
+class GameStatsByGoalShootsViewSet(viewsets.ModelViewSet):
+    serializer_class = GameStatsByGoalShootsSerializer
+    queryset = GameStatsByGoalShoots.objects.all()
+
+
+class GameStatsSummaryViewSet(viewsets.ModelViewSet):
+    serializer_class = GameStatsSummarySerializer
+    queryset = GameStatsSummary.objects.all()
 
 
 class GoalkeeperStatsViewSet(viewsets.ModelViewSet):

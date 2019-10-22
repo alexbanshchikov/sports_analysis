@@ -1,7 +1,9 @@
 from rest_framework.routers import DefaultRouter
 
 from .views import AmpluaViewSet, CoachViewSet, CoachInTeamViewSet, ConferenceViewSet, DerbiViewSet, DivisionViewSet, \
-    GameViewSet, GameGoalsViewSet, GamePenaltiesViewSet, GameStatsViewSet, GoalkeeperStatsViewSet, LeagueViewSet, \
+    GameViewSet, GameGoalsViewSet, GamePenaltiesViewSet, GameStatsByBodyContactViewSet, \
+    GameStatsByDifferentStrengthViewSet, GameStatsByGoalShootsViewSet, GameStatsSummaryViewSet, \
+    GoalkeeperStatsViewSet, LeagueViewSet, \
     MannerOfPlayViewSet, MannerOfPlayInTeamViewSet, OffenceStatsViewSet, PersonalEnemyViewSet, PlayerViewSet, \
     PlayerInTeamViewSet, PlayerStatusViewSet, RefereeViewSet, RefereeInGameViewSet, SeasonViewSet, TeamViewSet, \
     TeamAdditionalStatsViewSet, TeamAfterGameBullitsViewSet, TeamGoalShootsViewSet, TeamInConferenceViewSet, \
@@ -24,7 +26,10 @@ router.register(r'hockey_app/division', DivisionViewSet)
 router.register(r'hockey_app/game', GameViewSet)
 router.register(r'hockey_app/game_goals', GameGoalsViewSet)                                         # router.register(r'hockey_app/game/goals', GameGoalsViewSet)
 router.register(r'hockey_app/game_penalties', GamePenaltiesViewSet)                                 # router.register(r'hockey_app/game/penalties', GamePenaltiesViewSet)
-router.register(r'hockey_app/game_stats', GameStatsViewSet)                                         # router.register(r'hockey_app/game/stats', GameStatsViewSet)
+router.register(r'hockey_app/game_stats_by_body_contact', GameStatsByBodyContactViewSet)            # router.register(r'hockey_app/game/stats', GameStatsViewSet)
+router.register(r'hockey_app/game_stats_by_different_strength', GameStatsByDifferentStrengthViewSet)
+router.register(r'hockey_app/game_stats_by_goal_shoots', GameStatsByGoalShootsViewSet)
+router.register(r'hockey_app/game_stats_summary', GameStatsSummaryViewSet)
 
 router.register(r'hockey_app/goalkeeper_stats', GoalkeeperStatsViewSet)
 

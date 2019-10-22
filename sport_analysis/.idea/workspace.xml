@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8c32b6af-2f35-44ec-a074-43c83753a8b3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sport_analysis/hockey_app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/sport_analysis/hockey_app/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sport_analysis/hockey_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/sport_analysis/hockey_app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sport_analysis/hockey_app/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/sport_analysis/hockey_app/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sport_analysis/hockey_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/sport_analysis/hockey_app/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sport_analysis/hockey_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/sport_analysis/hockey_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sport_analysis/sport_analysis/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/sport_analysis/sport_analysis/settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +25,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/sport_analysis/manage.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../neurosi" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
